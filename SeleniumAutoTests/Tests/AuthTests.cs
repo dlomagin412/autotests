@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using OpenQA.Selenium;
 using SeleniumAutoTests.Base;
 using SeleniumAutoTests.Data;
 
@@ -11,10 +10,10 @@ namespace SeleniumAutoTests.Tests
         [Test]
         public void LoginTest()
         {
-            AccountData admin = new AccountData("admin", "password");
+            AccountData admin = new("admin", "password");
 
-            OpenHomePage();
-            Login(admin);
+            app.Navigation.OpenHomePage();
+            app.Auth.Login(admin);
         }
     }
 }

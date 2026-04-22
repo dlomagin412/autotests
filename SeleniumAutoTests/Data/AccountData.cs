@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SeleniumAutoTests.Data
+﻿namespace SeleniumAutoTests.Data
 {
     public class AccountData
     {
