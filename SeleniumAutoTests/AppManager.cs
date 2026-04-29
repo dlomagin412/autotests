@@ -13,12 +13,9 @@ namespace SeleniumAutoTests
         protected NavigationHelper navigation;
         protected RoomHelper room;
 
-        public IWebDriver Driver { get { return driver; } }
-        public LoginHelper Auth { get { return auth; } }
-        public NavigationHelper Navigation { get { return navigation; } }
-        public RoomHelper Room { get { return room; } }
+        private static ThreadLocal<AppManager> app = new ThreadLocal<AppManager>();
 
-        public AppManager()
+        private AppManager()
         {
             driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
@@ -30,12 +27,31 @@ namespace SeleniumAutoTests
             room = new RoomHelper(this);
         }
 
-        public void Stop()
+        public static AppManager GetInstance()
         {
-            if (driver != null)
+            if (!app.IsValueCreated)
+            {
+                AppManager newInstance = new AppManager();
+                newInstance.Navigation.OpenHomePage();
+                app.Value = newInstance;
+            }
+            return app.Value;
+        }
+
+        public IWebDriver Driver { get { return driver; } }
+        public LoginHelper Auth { get { return auth; } }
+        public NavigationHelper Navigation { get { return navigation; } }
+        public RoomHelper Room { get { return room; } }
+        ~AppManager()
+        {
+            try
             {
                 driver.Quit();
                 driver.Dispose();
+            }
+            catch (Exception)
+            {
+                
             }
         }
     }

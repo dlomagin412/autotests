@@ -43,6 +43,11 @@ namespace SeleniumAutoTests.Helpers
         {
             driver.FindElement(By.XPath($"//div[@data-testid='roomlisting']//p[text()='{roomName}']")).Click();
             Thread.Sleep(500);
+            ClickEditButton();
+        }
+
+        public void ClickEditButton()
+        {
             driver.FindElement(By.CssSelector(".btn-outline-primary")).Click();
         }
 
@@ -57,6 +62,26 @@ namespace SeleniumAutoTests.Helpers
             string xpath = $"//div[@data-testid='roomlisting'][.//p[text()='{roomName}']]//span[contains(@class, 'roomDelete')]";
 
             driver.FindElement(By.XPath(xpath)).Click();
+        }
+
+        public RoomData GetRoomDataFromEditForm()
+        {
+            string name = driver.FindElement(By.Id("roomName")).GetAttribute("value");
+            string price = driver.FindElement(By.Id("roomPrice")).GetAttribute("value");
+
+            var typeSelect = new OpenQA.Selenium.Support.UI.SelectElement(driver.FindElement(By.Id("type")));
+            string type = typeSelect.SelectedOption.Text;
+
+            var accessibleSelect = new OpenQA.Selenium.Support.UI.SelectElement(driver.FindElement(By.Id("accessible")));
+            string accessible = accessibleSelect.SelectedOption.Text.ToLower();
+
+            return new RoomData(name, price)
+            {
+                Type = type,
+                Accessible = accessible,
+                HasWifi = driver.FindElement(By.Id("wifiCheckbox")).Selected,
+                HasTv = driver.FindElement(By.Id("tvCheckbox")).Selected
+            };
         }
     }
 }

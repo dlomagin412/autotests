@@ -18,8 +18,6 @@ namespace SeleniumAutoTests.Tests
             string newNum = rnd.Next(500, 1000).ToString();
             RoomData modifiedRoom = new(newNum, "300")
             {
-                Type = "Twin",
-                Accessible = "true",
                 HasWifi = true,
                 HasTv = true
             };
@@ -30,15 +28,24 @@ namespace SeleniumAutoTests.Tests
 
             app.Room.FillRoomForm(initialRoom);
             app.Room.SubmitRoomCreation();
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
 
             app.Room.InitRoomModification(initialRoom.RoomName);
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
+
             app.Room.FillRoomForm(modifiedRoom);
             app.Room.SubmitRoomModification();
+            Thread.Sleep(2000);
 
+            app.Room.ClickEditButton();
             Thread.Sleep(1000);
-            Assert.That(app.Driver.PageSource, Does.Contain(modifiedRoom.RoomName));
+
+            RoomData actualRoom = app.Room.GetRoomDataFromEditForm();
+
+            Assert.That(actualRoom.RoomName, Is.EqualTo(modifiedRoom.RoomName));
+            Assert.That(actualRoom.Price, Is.EqualTo(modifiedRoom.Price));
+            Assert.That(actualRoom.HasWifi, Is.EqualTo(modifiedRoom.HasWifi));
+            Assert.That(actualRoom.HasTv, Is.EqualTo(modifiedRoom.HasTv));
         }
     }
 }
