@@ -1,3 +1,4 @@
+using System.Xml.Serialization;
 using SeleniumAutoTests.Base;
 using SeleniumAutoTests.Data;
 
@@ -6,12 +7,18 @@ namespace SeleniumAutoTests.Tests
     [TestFixture]
     public class CreateTests : TestBase
     {
-        [Test]
-        public void CreateRoomTest()
+        public static IEnumerable<RoomData> RoomDataFromXmlFile()
+        {
+            using (StreamReader reader = new StreamReader(@"rooms.xml"))
+            {
+                return (List<RoomData>)new XmlSerializer(typeof(List<RoomData>)).Deserialize(reader);
+            }
+        }
+
+        [Test, TestCaseSource(nameof(RoomDataFromXmlFile))]
+        public void CreateRoomTest(RoomData newRoom)
         {
             AccountData admin = new("admin", "password");
-            string roomNum = new Random().Next(100, 1000).ToString();
-            RoomData newRoom = new(roomNum, "200") { HasWifi = true, HasTv = true };
 
             app.Navigation.OpenHomePage();
             app.Auth.Login(admin);

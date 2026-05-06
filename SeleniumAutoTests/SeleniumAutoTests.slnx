@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="../TestDataGenerator/TestDataGenerator.csproj" Id="a59be39c-228a-4698-b10f-d026b38e60af" />
   <Project Path="SeleniumAutoTests.csproj" />
 </Solution>
