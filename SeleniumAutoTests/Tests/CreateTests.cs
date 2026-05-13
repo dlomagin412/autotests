@@ -5,7 +5,7 @@ using SeleniumAutoTests.Data;
 namespace SeleniumAutoTests.Tests
 {
     [TestFixture]
-    public class CreateTests : TestBase
+    public class CreateTests : AuthBase
     {
         public static IEnumerable<RoomData> RoomDataFromXmlFile()
         {
@@ -18,12 +18,7 @@ namespace SeleniumAutoTests.Tests
         [Test, TestCaseSource(nameof(RoomDataFromXmlFile))]
         public void CreateRoomTest(RoomData newRoom)
         {
-            AccountData admin = new("admin", "password");
-
-            app.Navigation.OpenHomePage();
-            app.Auth.Login(admin);
-            Thread.Sleep(1000);
-
+            
             app.Room.FillRoomForm(newRoom);
             app.Room.SubmitRoomCreation();
             Thread.Sleep(2000);

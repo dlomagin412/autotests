@@ -4,12 +4,11 @@ using SeleniumAutoTests.Data;
 namespace SeleniumAutoTests.Tests
 {
     [TestFixture]
-    public class EditTests : TestBase
+    public class EditTests : AuthBase
     {
         [Test]
         public void EditRoom()
         {
-            AccountData admin = new("admin", "password");
             Random rnd = new();
 
             string oldNum = rnd.Next(100, 500).ToString();
@@ -22,9 +21,6 @@ namespace SeleniumAutoTests.Tests
                 HasTv = true
             };
 
-            app.Navigation.OpenHomePage();
-            app.Auth.Login(admin);
-            Thread.Sleep(1000);
 
             app.Room.FillRoomForm(initialRoom);
             app.Room.SubmitRoomCreation();

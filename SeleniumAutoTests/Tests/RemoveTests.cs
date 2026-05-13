@@ -4,19 +4,13 @@ using SeleniumAutoTests.Data;
 namespace SeleniumAutoTests.Tests
 {
     [TestFixture]
-    public class RemoveTests : TestBase
+    public class RemoveTests : AuthBase
     {
         [Test]
         public void RemoveRoom()
         {
-            AccountData admin = new("admin", "password");
-
             string roomToDelete = new Random().Next(100, 1000).ToString();
             RoomData newRoom = new(roomToDelete, "100");
-
-            app.Navigation.OpenHomePage();
-            app.Auth.Login(admin);
-            Thread.Sleep(1000);
 
             app.Room.FillRoomForm(newRoom);
             app.Room.SubmitRoomCreation();

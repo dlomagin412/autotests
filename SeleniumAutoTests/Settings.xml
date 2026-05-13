@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Settings>
+	<BaseUrl>https://automationintesting.online/admin/</BaseUrl>
+	<Login>admin</Login>
+	<Password>password</Password>
+</Settings>

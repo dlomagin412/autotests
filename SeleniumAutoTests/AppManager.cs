@@ -20,7 +20,7 @@ namespace SeleniumAutoTests
             driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            baseURL = "https://automationintesting.online/admin/";
+            baseURL = Settings.BaseURL;
 
             auth = new LoginHelper(this);
             navigation = new NavigationHelper(this, baseURL);

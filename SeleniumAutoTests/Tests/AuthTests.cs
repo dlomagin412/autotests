@@ -1,6 +1,6 @@
-using NUnit.Framework;
 using SeleniumAutoTests.Base;
 using SeleniumAutoTests.Data;
+using SeleniumAutoTests.Helpers;
 
 namespace SeleniumAutoTests.Tests
 {
@@ -8,12 +8,25 @@ namespace SeleniumAutoTests.Tests
     public class AuthTests : TestBase
     {
         [Test]
-        public void LoginTest()
+        public void LoginWithValidData()
         {
-            AccountData admin = new("admin", "password");
+            app.Auth.Logout();
 
-            app.Navigation.OpenHomePage();
+            AccountData admin = new AccountData(Settings.Login, Settings.Password);
             app.Auth.Login(admin);
+
+            Assert.That(app.Auth.IsLoggedIn(), Is.True);
+        }
+
+        [Test]
+        public void LoginWithInvalidData()
+        {
+            app.Auth.Logout();
+
+            AccountData invalidUser = new AccountData("admin", "wrong_pass");
+            app.Auth.Login(invalidUser);
+
+            Assert.That(app.Auth.IsLoggedIn(), Is.False);
         }
     }
 }
